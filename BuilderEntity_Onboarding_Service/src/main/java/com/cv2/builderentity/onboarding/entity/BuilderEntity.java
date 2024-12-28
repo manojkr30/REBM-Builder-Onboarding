@@ -1,5 +1,41 @@
 package com.cv2.builderentity.onboarding.entity;
 
-public class BuilderEntity {
+import java.util.List;
 
+import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
+
+import lombok.Data;
+
+@Data
+@Document(collection = "builders")
+public class BuilderEntity {
+	@Id
+	private String id;
+	private String name;
+	private String description;
+	private String emailId;
+	private String mobileNo;
+
+	private String tin;
+	private String tran;
+
+	@Field("address")
+	private Address address;
+
+	@Field("documents")
+	private List<RequiredDocuments> documents;
+
+	// To Generate Auto-Id for Document
+	public void assignDocumentIds() {
+		if (documents != null) {
+			documents.forEach(doc -> {
+				if (doc.getId() == null) {
+					doc.setId(new ObjectId().toString());
+				}
+			});
+		}
+	}
 }
