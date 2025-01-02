@@ -33,7 +33,7 @@ public class BuilderServiceImpl implements BuilderService {
 
 	 @Override
 	    public BuilderEntity getEntityByName(String name) {
-	        return builderRepository.findByEntityName(name).orElse(null);
+	        return builderRepository.findByName(name).orElse(null);
 	 }
 
 }

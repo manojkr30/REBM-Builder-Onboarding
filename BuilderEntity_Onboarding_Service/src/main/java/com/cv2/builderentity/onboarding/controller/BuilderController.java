@@ -35,14 +35,14 @@ public class BuilderController {
 		return new ResponseEntity<>(builderService.saveEntity(builder), HttpStatus.CREATED);
 	}
 
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<BuilderEntity>> fetchAllBuilders() {
 		return new ResponseEntity<>(builderService.fetchAllBuilders(), HttpStatus.FOUND);
 	}
 	
 	
-	  @GetMapping public ResponseEntity<Response> getEntityById(@PathVariable("id")
-	  String id) { 
+	  @GetMapping("/{id}")
+	  public ResponseEntity<Response> getEntityById(@PathVariable("id") String id) { 
 		  log.info("Started execution of GetById..."); 
 		  return new ResponseEntity<>(Response.builder() .data(builderService.getEntityById(id))
 				  .statusCode(HttpStatus.FOUND.value())
@@ -51,7 +51,7 @@ public class BuilderController {
 	  }
 	  
 	
-	@GetMapping
+	@GetMapping(params = "name")
 	public ResponseEntity<BuilderEntity> getEntityByName(@PathVariable String name) {
 	    BuilderEntity entity = builderService.getEntityByName(name);
 	    if (entity != null) {

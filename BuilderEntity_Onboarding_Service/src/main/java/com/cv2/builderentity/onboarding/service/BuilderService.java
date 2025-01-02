@@ -12,7 +12,7 @@ public interface BuilderService {
 	
 	BuilderEntity getEntityById(String id);
 
-    BuilderEntity getEntityByName(String entityName);
+    BuilderEntity getEntityByName(String name);
 
 	}
 

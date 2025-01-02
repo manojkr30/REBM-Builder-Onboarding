@@ -10,6 +10,6 @@ import com.cv2.builderentity.onboarding.entity.BuilderEntity;
 
 @Repository
 public interface BuilderRepository extends MongoRepository<BuilderEntity, String> {
-	Optional<BuilderEntity> findByEntityName(String name);
+	Optional<BuilderEntity> findByName(String name);
 
 }
