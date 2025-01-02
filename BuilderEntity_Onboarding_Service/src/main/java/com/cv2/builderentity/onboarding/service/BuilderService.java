@@ -9,5 +9,13 @@ public interface BuilderService {
 	public BuilderEntity saveEntity(BuilderEntity builderEntity);
 
 	public List<BuilderEntity> fetchAllBuilders();
+	
+	BuilderEntity getEntityById(String id);
 
-}
+    BuilderEntity getEntityByName(String entityName);
+
+	}
+
+	
+	
+
