@@ -43,7 +43,7 @@ public class BuilderController {
 	
 	  @GetMapping("/{id}")
 	  public ResponseEntity<Response> getEntityById(@PathVariable("id") String id) { 
-		  log.info("Started execution of GetById..."); 
+		  log.info("Started execution of GetByyId..."); 
 		  return new ResponseEntity<>(Response.builder() .data(builderService.getEntityById(id))
 				  .statusCode(HttpStatus.FOUND.value())
 				  .statusMsg(" Successfully Fetched from database by id " + id) .build(),
