@@ -14,18 +14,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.cv2.builderentity.onboarding.entity.BuilderEntity;
 import com.cv2.builderentity.onboarding.service.BuilderService;
-import com.cv2.builderentity.onboarding.util.Response;
+
 
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
-@Slf4j
 @RequestMapping("api/builder/v1")
 public class BuilderController {
 
-	@Autowired
 	private BuilderService builderService;
 
+	@Autowired
 	public BuilderController(BuilderService builderService) {
 		this.builderService = builderService;
 	}
@@ -41,24 +40,15 @@ public class BuilderController {
 	}
 	
 	
-	  @GetMapping public ResponseEntity<Response> getEntityById(@PathVariable("id")
-	  String id) { 
-		  log.info("Started execution of GetById..."); 
-		  return new ResponseEntity<>(Response.builder() .data(builderService.getEntityById(id))
-				  .statusCode(HttpStatus.FOUND.value())
-				  .statusMsg(" Successfully Fetched from database by id " + id) .build(),
-				  HttpStatus.FOUND);
+	  @GetMapping("{id}")
+	  public ResponseEntity<BuilderEntity> getEntityById(@PathVariable("id") String id) { 
+		  return new ResponseEntity<>(builderService.getEntityById(id), HttpStatus.FOUND);
 	  }
 	  
 	
-	@GetMapping
-	public ResponseEntity<BuilderEntity> getEntityByName(@PathVariable String name) {
-	    BuilderEntity entity = builderService.getEntityByName(name);
-	    if (entity != null) {
-	        return new ResponseEntity<>(entity, HttpStatus.FOUND);
-	    } else {
-	        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-	    }
+	@GetMapping("name/{name}")
+	public ResponseEntity<BuilderEntity> getEntityByName(@PathVariable("name") String name) {
+	   return new ResponseEntity<BuilderEntity>(builderService.getEntityByName(name),HttpStatus.FOUND);
 	}
 
     }
