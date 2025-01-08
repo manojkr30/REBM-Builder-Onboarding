@@ -14,6 +14,8 @@ public interface BuilderService {
 
     BuilderEntity getEntityByName(String name);
 
+    BuilderEntity deboardEntity(String id);
+
 	}
 
 	

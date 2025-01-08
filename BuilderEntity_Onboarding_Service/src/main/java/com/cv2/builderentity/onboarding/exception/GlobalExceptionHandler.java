@@ -18,4 +18,21 @@ public class GlobalExceptionHandler {
 		errorResponse.put("ERROR Code", exception.errorStatusCode);
 		return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
 	}
+	
+    @ExceptionHandler(InvalidStateException.class)
+    public ResponseEntity<Object> globalInvalidStateException(InvalidStateException exception) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("Error Message", exception.errormessage);
+        errorResponse.put("Error Code", exception.errorStatusCode); 
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<Object> globalEntityNotFoundException(EntityNotFoundException exception) {
+        Map<String, String> errorResponse = new HashMap<>();
+        errorResponse.put("Error Message", exception.errormessage);
+        errorResponse.put("Error Code",exception.errorStatusCode); 
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 }
+

@@ -24,6 +24,9 @@ public class BuilderEntity {
 	private String tin;
 	private String tran;
     private StatusCode builderStatus=StatusCode.INPROGRESS;
+ 
+
+
 	
 	@Field("address")
 	private Address address;

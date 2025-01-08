@@ -50,7 +50,12 @@ public class BuilderController {
 	   return new ResponseEntity<BuilderEntity>(builderService.getEntityByName(name),HttpStatus.FOUND);
 
 	}
-
+	
+	@PostMapping("/deboardEntity/{id}")
+	public ResponseEntity<BuilderEntity> deboardEntity(@PathVariable("id") String id) {
+	    BuilderEntity updatedEntity = builderService.deboardEntity(id);
+	    return ResponseEntity.ok(updatedEntity);
     }
+}
 
 
