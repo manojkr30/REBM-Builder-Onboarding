@@ -34,7 +34,8 @@ public class AwsS3Service {
 		this.awsS3Config = awsS3Config;
 		this.s3Presigner = s3Presigner;
 	}
-
+    
+	//Method To Upload Documents
 	public List<RequiredDocuments> uploadFiles(List<MultipartFile> files) {
 		List<RequiredDocuments> uploadResults = new ArrayList<>();
 
@@ -58,7 +59,8 @@ public class AwsS3Service {
 
 		return uploadResults;
 	}
-
+     
+	//Method To Get Document Saved Path
 	public String generatePresignedUrl(String bucketName, String fileKey) {
 		GetObjectRequest getObjectRequest = GetObjectRequest.builder().bucket(bucketName).key(fileKey).build();
 
