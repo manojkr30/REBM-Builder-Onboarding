@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 public class GlobalExceptionHandler {
 
 	@ExceptionHandler(BuilderNotFoundException.class)
-	public ResponseEntity<Object> globalBuilderNotFoundNotException(BuilderNotFoundException exception){
-		Map<String,String> errorResponse= new HashMap<>();
+	public ResponseEntity<Object> globalBuilderNotFoundNotException(BuilderNotFoundException exception) {
+		Map<String, String> errorResponse = new HashMap<>();
 		errorResponse.put("Eroor Message", exception.errormessage);
 		errorResponse.put("ERROR Code", exception.errorStatusCode);
-		return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
 	}
 }
