@@ -30,8 +30,8 @@ public class BuilderController {
 	}
 
 	@PostMapping
-	public ResponseEntity<BuilderEntity> saveBuilder(@RequestBody BuilderEntity builder) {
-		return new ResponseEntity<>(builderService.saveEntity(builder), HttpStatus.CREATED);
+	public ResponseEntity<BuilderEntity> builderOnboarding(@RequestBody BuilderEntity builder) {
+		return new ResponseEntity<>(builderService.builderOnboarding(builder), HttpStatus.CREATED);
 	}
 
 	@GetMapping

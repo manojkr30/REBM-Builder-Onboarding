@@ -61,8 +61,6 @@ public class AwsS3Service {
 	}
      
 	//Method To Get Document Saved Path 
-	//S-Key =
-	//A-key =
 	public String generatePresignedUrl(String bucketName, String fileKey) {
 		GetObjectRequest getObjectRequest = GetObjectRequest.builder().bucket(bucketName).key(fileKey).build();
 
