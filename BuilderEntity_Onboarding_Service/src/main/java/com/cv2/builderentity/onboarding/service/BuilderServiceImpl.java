@@ -4,20 +4,13 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException.NotFound;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.support.MultipartFilter;
 
-import com.cv2.builderentity.onboarding.config.AwsS3Config;
 import com.cv2.builderentity.onboarding.entity.BuilderEntity;
-import com.cv2.builderentity.onboarding.entity.RequiredDocuments;
 import com.cv2.builderentity.onboarding.exception.BuilderNotFoundException;
+import com.cv2.builderentity.onboarding.exception.BuilderValidationException;
 import com.cv2.builderentity.onboarding.repository.BuilderRepository;
-
-import software.amazon.awssdk.services.s3.S3Client;
 
 @Service
 public class BuilderServiceImpl implements BuilderService {
@@ -32,7 +25,19 @@ public class BuilderServiceImpl implements BuilderService {
 	}
 
 	@Override
-	public BuilderEntity saveEntity(BuilderEntity builderEntity) {
+	public BuilderEntity builderOnboarding(BuilderEntity builderEntity) {
+		Optional<BuilderEntity> existBuilder = builderRepository.findByIin(builderEntity.getTin());
+		if (existBuilder.isPresent()) {
+			BuilderEntity builderInDb = existBuilder.get();
+			switch (builderInDb.getBuilderStatus()) {
+			case BG_FAILED -> throw new BuilderValidationException(
+					"Unable to onboard the user as back ground check is failed.", "ONBR_502");
+
+			case ACTIVE -> throw new BuilderValidationException(
+					"Unable to onboard the user as user already registered with system.", "ONBR_503");
+
+			}
+		}
 		builderEntity.assignDocumentIds();
 		return builderRepository.save(builderEntity);
 	}
@@ -44,26 +49,25 @@ public class BuilderServiceImpl implements BuilderService {
 
 	@Override
 	public BuilderEntity getEntityById(String id) {
-		return builderRepository.findById(id)
-				.orElseThrow(() -> new BuilderNotFoundException("Buider Not found by Id :" + id,
-						String.valueOf(HttpStatus.NOT_FOUND)));
+		return builderRepository.findById(id).orElseThrow(() -> new BuilderNotFoundException(
+				"Unable to fetch the onboard user details , as user not exist in the system.", "ONBR_505"));
 	}
 
 	@Override
 	public BuilderEntity getEntityByName(String name) {
-		return builderRepository.findByName(name)
-				.orElseThrow(() -> new BuilderNotFoundException("Buider Not found by Name :" + name,
-						String.valueOf(HttpStatus.NOT_FOUND)));
+		return builderRepository.findByName(name).orElseThrow(() -> new BuilderNotFoundException(
+				"Unable to fetch the onboard user details , as user not exist in the system.", "ONBR_505"));
 	}
 
 	@Override
 	public BuilderEntity saveDocuments(String id, List<MultipartFile> file) {
-		BuilderEntity builderEntity = builderRepository.findById(id)
-				.orElseThrow(() -> new BuilderNotFoundException("Buider Not found by Id :" + id,
-						String.valueOf(HttpStatus.NOT_FOUND)));
+		BuilderEntity builderEntity = builderRepository.findById(id).orElseThrow(() -> new BuilderNotFoundException(
+				"Unable to fetch the onboard user details , as user not exist in the system.", "ONBR_505"));
 		builderEntity.setDocuments(awsS3Service.uploadFiles(file));
 		builderEntity.assignDocumentIds();
 		return builderRepository.save(builderEntity);
 	}
+
+
 
 }

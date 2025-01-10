@@ -9,7 +9,7 @@ import com.cv2.builderentity.onboarding.entity.RequiredDocuments;
 
 public interface BuilderService {
 
-	BuilderEntity saveEntity(BuilderEntity builderEntity);
+	BuilderEntity builderOnboarding(BuilderEntity builderEntity);
 
 	List<BuilderEntity> fetchAllBuilders();
 

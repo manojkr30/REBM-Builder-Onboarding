@@ -1,5 +1,7 @@
 package com.cv2.builderentity.onboarding.entity;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.bson.types.ObjectId;
@@ -30,6 +32,16 @@ public class BuilderEntity {
 
 	@Field("documents")
 	private List<RequiredDocuments> documents;
+	
+	private boolean DebordingStatus;
+	private LocalDate DeboardigDate;
+	private LocalTime DeboardingTime;
+	private String DebordingDescription;
+	
+	
+	
+	
+	
 
 	// To Generate Auto-Id for Document
 	public void assignDocumentIds() {

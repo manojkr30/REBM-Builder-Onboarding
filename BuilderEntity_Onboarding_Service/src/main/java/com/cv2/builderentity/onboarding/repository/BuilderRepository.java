@@ -12,4 +12,6 @@ import com.cv2.builderentity.onboarding.entity.BuilderEntity;
 public interface BuilderRepository extends MongoRepository<BuilderEntity, String> {
 	Optional<BuilderEntity> findByName(String name);
 
+	Optional<BuilderEntity> findByIin(String tin);
+
 }
